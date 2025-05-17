@@ -2,22 +2,24 @@
 let websiteData = {};
 
 // Create a promise that will resolve when data is loaded
-const dataLoadingPromise = fetch('http://localhost:5000/api/data')
-  .then(response => {
+const dataLoadingPromise = fetch(
+  "https://aws-user-group-yaounde.onrender.com/api/data"
+)
+  .then((response) => {
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
     }
     return response.json();
   })
-  .then(data => {
+  .then((data) => {
     // Update the data object when load completes
     websiteData = data;
-    console.log('Website data loaded from API');
-    console.log(websiteData)
+    console.log("Website data loaded from API");
+    console.log(websiteData);
     return data;
   })
-  .catch(error => {
-    console.error('Failed to load initial data:', error);
+  .catch((error) => {
+    console.error("Failed to load initial data:", error);
     // Return empty data on error
     return {};
   });
@@ -26,4 +28,3 @@ const dataLoadingPromise = fetch('http://localhost:5000/api/data')
 
 export const DATA = websiteData;
 export const dataLoaded = dataLoadingPromise;
-

@@ -1,44 +1,47 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Icon from '../../components/shared/Icon';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Icon from "../../components/shared/Icon";
 
 function Login() {
-  const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (code.length !== 4) {
-      setError('Please enter a 4-digit code');
+      setError("Please enter a 4-digit code");
       return;
     }
-    
+
     setIsLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      });
-      
+      const response = await fetch(
+        "https://aws-user-group-yaounde.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code }),
+        }
+      );
+
       const data = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(data.message || 'Authentication failed');
+        throw new Error(data.message || "Authentication failed");
       }
-      
+
       // Store token in localStorage
-      localStorage.setItem('adminToken', data.token);
-      
+      localStorage.setItem("adminToken", data.token);
+
       // Redirect to admin page
-      navigate('/paulaadmin');
+      navigate("/paulaadmin");
     } catch (error) {
       setError(error.message);
     } finally {
@@ -51,13 +54,18 @@ function Login() {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-primary mb-2">Admin Access</h1>
-          <p className="text-gray-600">Please enter the 4-digit security code</p>
+          <p className="text-gray-600">
+            Please enter the 4-digit security code
+          </p>
         </div>
-        
+
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <div className="flex flex-col space-y-2">
-              <label htmlFor="code" className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="code"
+                className="text-sm font-medium text-gray-700"
+              >
                 Security Code
               </label>
               <input
@@ -74,18 +82,20 @@ function Login() {
               />
             </div>
           </div>
-          
+
           {error && (
             <div className="mb-4 p-2 bg-red-100 text-red-700 rounded-md text-center">
               {error}
             </div>
           )}
-          
+
           <button
             type="submit"
             disabled={isLoading}
             className={`w-full py-2 px-4 rounded-button font-bold transition-colors ${
-              isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-secondary text-primary hover:bg-secondary/90'
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-secondary text-primary hover:bg-secondary/90"
             }`}
           >
             {isLoading ? (
@@ -94,11 +104,11 @@ function Login() {
                 Verifying...
               </span>
             ) : (
-              'Login'
+              "Login"
             )}
           </button>
         </form>
-        
+
         <div className="mt-6 text-center">
           <a href="/" className="text-sm text-secondary hover:underline">
             Return to Home Page

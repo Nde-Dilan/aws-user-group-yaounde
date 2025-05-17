@@ -46,13 +46,16 @@ function DataManager() {
   const handleSave = async () => {
     try {
       // Save to API
-      const response = await fetch("http://localhost:5000/api/data/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://aws-user-group-yaounde.onrender.com/api/data/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
@@ -211,8 +214,7 @@ function DataManager() {
     (section) => section.id === activeSection
   )?.component;
 
-
-   const { logout } = useAuth();
+  const { logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50">

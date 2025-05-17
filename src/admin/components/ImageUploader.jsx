@@ -39,6 +39,7 @@ function ImageUploader({
     const extension = file.name.split(".").pop();
     const fileName = `${fileNamePrefix}-${timestamp}.${extension}`;
 
+    
     // Show loading state
     setIsUploading(true);
 
@@ -46,6 +47,7 @@ function ImageUploader({
       // Create form data
       const formData = new FormData();
       formData.append("image", file);
+      formData.append("fileName", fileName);
       formData.append("prefix", fileNamePrefix);
 
       // If replacing an existing image, send its path
@@ -54,10 +56,13 @@ function ImageUploader({
       }
 
       // Upload to API
-      const response = await fetch("http://localhost:5000/api/images/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://aws-user-group-yaounde.onrender.com/api/images/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Upload failed");
