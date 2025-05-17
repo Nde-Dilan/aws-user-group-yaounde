@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS User Group Yaoundé</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#232F3E',secondary:'#FF9900'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .nav-link.active {
+            color: #FF9900;
+            border-bottom: 2px solid #FF9900;
+        }
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+        input[type="checkbox"]:checked {
+            background-color: #FF9900;
+            border-color: #FF9900;
+        }
+        input[type="checkbox"]:checked::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .event-toggle input[type="radio"] {
+            display: none;
+        }
+        .event-toggle label {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+        }
+        .event-toggle input[type="radio"]:checked + label {
+            background-color: #FF9900;
+            color: white;
+        }
+        .team-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .team-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .team-scroll::-webkit-scrollbar-thumb {
+            background: #FF9900;
+            border-radius: 10px;
+        }
+        .team-scroll::-webkit-scrollbar-thumb:hover {
+            background: #e68a00;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #FF9900;
+            box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-white text-2xl font-bold flex items-center">
+                <div class="w-10 h-10 flex items-center justify-center mr-2">
+                    <i class="ri-cloud-line ri-2x"></i>
+                </div>
+                <span>AWS User Group Yaoundé</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-secondary transition-colors">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-secondary transition-colors">About</a>
+                <a href="#events" class="nav-link text-white hover:text-secondary transition-colors">Events</a>
+                <a href="#team" class="nav-link text-white hover:text-secondary transition-colors">Team</a>
+                <a href="#contact" class="nav-link text-white hover:text-secondary transition-colors">Contact</a>
+            </div>
+            <button class="md:hidden text-white">
+                <div class="w-10 h-10 flex items-center justify-center">
+                    <i class="ri-menu-line ri-2x"></i>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center hidden">
+        <button id="close-menu" class="absolute top-6 right-6 text-white">
+            <div class="w-10 h-10 flex items-center justify-center">
+                <i class="ri-close-line ri-2x"></i>
+            </div>
+        </button>
+        <div class="flex flex-col space-y-8 text-center">
+            <a href="#home" class="text-white text-xl hover:text-secondary transition-colors">Home</a>
+            <a href="#about" class="text-white text-xl hover:text-secondary transition-colors">About</a>
+            <a href="#events" class="text-white text-xl hover:text-secondary transition-colors">Events</a>
+            <a href="#team" class="text-white text-xl hover:text-secondary transition-colors">Team</a>
+            <a href="#contact" class="text-white text-xl hover:text-secondary transition-colors">Contact</a>
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center w-full" style="background-image: url('https://readdy.ai/api/search-image?query=A%20panoramic%20view%20of%20Yaound%C3%A9%20cityscape%20at%20dusk%20with%20modern%20buildings%20and%20natural%20landscapes%2C%20soft%20lighting%2C%20subtle%20AWS-themed%20elements%20in%20the%20sky%2C%20perfect%20for%20a%20tech%20community%20website%20background%2C%20with%20soft%20gradient%20lighting%20and%20space%20for%20text%20on%20the%20left%20side&width=1920&height=1080&seq=123&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/40"></div>
+        <div class="container mx-auto px-6 z-10 w-full">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">AWS User Group Yaoundé</h1>
+                <p class="text-xl text-white/90 mb-8">Join Cameroon's premier cloud computing community. Learn, share, and grow with fellow AWS enthusiasts.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <button class="bg-secondary hover:bg-secondary/90 text-primary font-bold py-3 px-8 !rounded-button whitespace-nowrap transition-all">
+                        Register for Next Event
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-bold py-3 px-8 !rounded-button whitespace-nowrap transition-all">
+                        Join Our Community
+                    </button>
+                </div>
+                
+                <div class="flex gap-6">
+                    <div class="countdown-item rounded-lg p-4 text-center">
+                        <div id="days" class="text-3xl font-bold text-white">12</div>
+                        <div class="text-white/80 text-sm">Days</div>
+                    </div>
+                    <div class="countdown-item rounded-lg p-4 text-center">
+                        <div id="hours" class="text-3xl font-bold text-white">18</div>
+                        <div class="text-white/80 text-sm">Hours</div>
+                    </div>
+                    <div class="countdown-item rounded-lg p-4 text-center">
+                        <div id="minutes" class="text-3xl font-bold text-white">45</div>
+                        <div class="text-white/80 text-sm">Minutes</div>
+                    </div>
+                    <div class="countdown-item rounded-lg p-4 text-center">
+                        <div id="seconds" class="text-3xl font-bold text-white">33</div>
+                        <div class="text-white/80 text-sm">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">About Our Community</h2>
+                <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-gray-600">We're a community-led group focused on Amazon Web Services technology, bringing together professionals, developers, architects, and enthusiasts in Yaoundé and beyond.</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-8 mb-16 max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold text-primary mb-4">Our Mission</h3>
+                <p class="text-gray-700 leading-relaxed">To foster a vibrant community of AWS users in Yaoundé, providing a platform for knowledge sharing, networking, and professional growth. We aim to accelerate cloud adoption and innovation in Cameroon through regular meetups, workshops, and collaborative learning.</p>
+            </div>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-primary mb-8 text-center">Core Values</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center bg-secondary/10 rounded-full mb-4 mx-auto">
+                            <i class="ri-group-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary mb-2 text-center">Community First</h4>
+                        <p class="text-gray-600 text-center">We prioritize building a supportive, inclusive community where everyone feels welcome and valued.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center bg-secondary/10 rounded-full mb-4 mx-auto">
+                            <i class="ri-lightbulb-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary mb-2 text-center">Knowledge Sharing</h4>
+                        <p class="text-gray-600 text-center">We believe in openly sharing expertise, experiences, and best practices to elevate everyone's skills.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 flex items-center justify-center bg-secondary/10 rounded-full mb-4 mx-auto">
+                            <i class="ri-rocket-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-primary mb-2 text-center">Innovation</h4>
+                        <p class="text-gray-600 text-center">We encourage experimentation, creative problem-solving, and pushing the boundaries of what's possible with AWS.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-bold text-primary mb-8 text-center">Benefits of Joining</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-lg p-5 border border-gray-100 hover:border-secondary/30 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="ri-user-voice-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Networking</h4>
+                        <p class="text-gray-600 text-sm">Connect with local AWS professionals and build valuable relationships.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border border-gray-100 hover:border-secondary/30 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="ri-book-open-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Learning</h4>
+                        <p class="text-gray-600 text-sm">Access workshops, tutorials, and hands-on labs to enhance your AWS skills.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border border-gray-100 hover:border-secondary/30 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="ri-briefcase-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Career Growth</h4>
+                        <p class="text-gray-600 text-sm">Discover job opportunities and advance your career in cloud computing.</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border border-gray-100 hover:border-secondary/30 transition-all">
+                        <div class="w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="ri-award-line ri-2x text-secondary"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Recognition</h4>
+                        <p class="text-gray-600 text-sm">Showcase your expertise through speaking opportunities and community contributions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Our Events</h2>
+                <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-gray-600">Join us for regular meetups, workshops, and special events to learn, connect, and grow your AWS skills.</p>
+            </div>
+            
+            <div class="event-toggle flex justify-center mb-10">
+                <div class="bg-white rounded-full p-1 inline-flex shadow-sm">
+                    <input type="radio" name="event-type" id="upcoming" checked>
+                    <label for="upcoming" class="font-medium text-sm">Upcoming Events</label>
+                    
+                    <input type="radio" name="event-type" id="past">
+                    <label for="past" class="font-medium text-sm">Past Events</label>
+                </div>
+            </div>
+            
+            <div id="upcoming-events" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200 relative" style="background-image: url('https://readdy.ai/api/search-image?query=A%20professional%20AWS%20workshop%20setting%20with%20developers%20and%20cloud%20architects%20collaborating%2C%20modern%20tech%20environment%2C%20projector%20screen%20showing%20AWS%20architecture%20diagrams%2C%20diverse%20group%20of%20attendees&width=600&height=400&seq=124&orientation=landscape'); background-size: cover; background-position: center;">
+                        <div class="absolute top-4 left-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-medium">
+                            May 30, 2025
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">AWS Serverless Architecture Workshop</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span class="text-sm">6:00 PM - 8:30 PM</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Tech Hub Yaoundé, Bastos District</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <span class="text-sm">Speaker: Emmanuel Nkwenti, AWS Solutions Architect</span>
+                        </div>
+                        <button class="w-full bg-secondary hover:bg-secondary/90 text-primary font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            Register Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200 relative" style="background-image: url('https://readdy.ai/api/search-image?query=A%20modern%20tech%20conference%20room%20with%20AWS%20branding%2C%20people%20networking%20and%20discussing%20cloud%20technologies%2C%20professional%20atmosphere%2C%20presentation%20setup%2C%20diverse%20attendees&width=600&height=400&seq=125&orientation=landscape'); background-size: cover; background-position: center;">
+                        <div class="absolute top-4 left-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-medium">
+                            June 15, 2025
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">Cloud Security Best Practices</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span class="text-sm">5:30 PM - 7:30 PM</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Digital Innovation Center, Mvan</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <span class="text-sm">Speaker: Olivia Mbarga, Security Specialist</span>
+                        </div>
+                        <button class="w-full bg-secondary hover:bg-secondary/90 text-primary font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            Register Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200 relative" style="background-image: url('https://readdy.ai/api/search-image?query=A%20hackathon%20event%20with%20developers%20working%20on%20AWS%20projects%2C%20collaborative%20coding%20environment%2C%20multiple%20screens%20showing%20cloud%20architectures%2C%20energetic%20atmosphere%2C%20diverse%20participants&width=600&height=400&seq=126&orientation=landscape'); background-size: cover; background-position: center;">
+                        <div class="absolute top-4 left-4 bg-secondary text-white px-3 py-1 rounded-full text-sm font-medium">
+                            July 8-9, 2025
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">AWS Community Hackathon</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span class="text-sm">9:00 AM - 6:00 PM (Both days)</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Yaoundé Innovation Hub, Omnisports</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-trophy-line"></i>
+                            </div>
+                            <span class="text-sm">Prizes worth over 1,000,000 XAF</span>
+                        </div>
+                        <button class="w-full bg-secondary hover:bg-secondary/90 text-primary font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            Register Team
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="past-events" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200" style="background-image: url('https://readdy.ai/api/search-image?query=A%20completed%20AWS%20workshop%20with%20participants%20engaged%20in%20discussion%2C%20presenter%20at%20front%20with%20AWS%20slides%2C%20professional%20tech%20environment%2C%20diverse%20audience&width=600&height=400&seq=127&orientation=landscape'); background-size: cover; background-position: center;"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">Getting Started with Amazon EKS</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            <span class="text-sm">April 12, 2025</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Tech Hub Yaoundé</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <span class="text-sm">Speaker: Jean-Paul Essono</span>
+                        </div>
+                        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            View Recap
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200" style="background-image: url('https://readdy.ai/api/search-image?query=A%20cloud%20migration%20workshop%20with%20IT%20professionals%20discussing%20AWS%20migration%20strategies%2C%20presentation%20slides%20showing%20migration%20paths%2C%20collaborative%20environment%2C%20diverse%20group&width=600&height=400&seq=128&orientation=landscape'); background-size: cover; background-position: center;"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">Cloud Migration Strategies</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            <span class="text-sm">March 25, 2025</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Digital Innovation Center</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            <span class="text-sm">Speaker: Marie Atangana</span>
+                        </div>
+                        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            View Recap
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gray-200" style="background-image: url('https://readdy.ai/api/search-image?query=An%20AWS%20networking%20event%20with%20professionals%20exchanging%20business%20cards%2C%20casual%20networking%20atmosphere%2C%20AWS%20branding%20visible%2C%20diverse%20attendees%20in%20business%20casual%20attire&width=600&height=400&seq=129&orientation=landscape'); background-size: cover; background-position: center;"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-primary mb-2">AWS Community Networking Mixer</h3>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            <span class="text-sm">February 18, 2025</span>
+                        </div>
+                        <div class="flex items-center mb-3 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-sm">Canal Olympia, Warda</span>
+                        </div>
+                        <div class="flex items-center mb-4 text-gray-600">
+                            <div class="w-5 h-5 flex items-center justify-center mr-2">
+                                <i class="ri-group-line"></i>
+                            </div>
+                            <span class="text-sm">45+ Attendees</span>
+                        </div>
+                        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                            View Photos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Meet Our Team</h2>
+                <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-gray-600">Our dedicated team of AWS enthusiasts who volunteer their time to build and nurture our community.</p>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 z-10">
+                    <button id="team-prev" class="bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-arrow-left-s-line text-primary"></i>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="team-scroll overflow-x-auto py-4 px-2">
+                    <div class="flex gap-6 min-w-max">
+                        <div class="bg-white rounded-lg shadow-md p-6 w-64">
+                            <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20an%20African%20man%20in%20his%2030s%20with%20short%20hair%20and%20glasses%2C%20wearing%20business%20casual%20attire%2C%20friendly%20smile%2C%20neutral%20background%2C%20high%20quality%20portrait&width=300&height=300&seq=130&orientation=squarish'); background-size: cover; background-position: center;"></div>
+                            <h3 class="text-xl font-bold text-primary text-center mb-1">Daniel Kamga</h3>
+                            <p class="text-secondary text-center mb-3">Community Lead</p>
+                            <p class="text-gray-600 text-sm text-center mb-4">AWS Certified Solutions Architect with 8+ years of experience in cloud infrastructure.</p>
+                            <div class="flex justify-center gap-3">
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-github-fill"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-md p-6 w-64">
+                            <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20an%20African%20woman%20in%20her%20late%2020s%20with%20natural%20hair%2C%20wearing%20professional%20attire%2C%20warm%20smile%2C%20neutral%20background%2C%20high%20quality%20portrait&width=300&height=300&seq=131&orientation=squarish'); background-size: cover; background-position: center;"></div>
+                            <h3 class="text-xl font-bold text-primary text-center mb-1">Sophie Nguemo</h3>
+                            <p class="text-secondary text-center mb-3">Technical Coordinator</p>
+                            <p class="text-gray-600 text-sm text-center mb-4">DevOps engineer specializing in AWS automation and CI/CD pipelines.</p>
+                            <div class="flex justify-center gap-3">
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-github-fill"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-md p-6 w-64">
+                            <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20African%20man%20in%20his%20mid-20s%20with%20short%20hair%2C%20wearing%20smart%20casual%20attire%2C%20confident%20smile%2C%20neutral%20background%2C%20high%20quality%20portrait&width=300&height=300&seq=132&orientation=squarish'); background-size: cover; background-position: center;"></div>
+                            <h3 class="text-xl font-bold text-primary text-center mb-1">Fabrice Moukam</h3>
+                            <p class="text-secondary text-center mb-3">Events Manager</p>
+                            <p class="text-gray-600 text-sm text-center mb-4">Community builder with expertise in organizing tech events and workshops.</p>
+                            <div class="flex justify-center gap-3">
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-github-fill"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-md p-6 w-64">
+                            <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20an%20African%20woman%20in%20her%2030s%20with%20braided%20hair%2C%20wearing%20business%20attire%2C%20friendly%20expression%2C%20neutral%20background%2C%20high%20quality%20portrait&width=300&height=300&seq=133&orientation=squarish'); background-size: cover; background-position: center;"></div>
+                            <h3 class="text-xl font-bold text-primary text-center mb-1">Christelle Nana</h3>
+                            <p class="text-secondary text-center mb-3">Content Creator</p>
+                            <p class="text-gray-600 text-sm text-center mb-4">Digital marketer and content specialist focused on cloud technology education.</p>
+                            <div class="flex justify-center gap-3">
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-instagram-fill"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-md p-6 w-64">
+                            <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20an%20African%20man%20in%20his%2040s%20with%20short%20salt%20and%20pepper%20hair%2C%20wearing%20business%20attire%2C%20serious%20professional%20expression%2C%20neutral%20background%2C%20high%20quality%20portrait&width=300&height=300&seq=134&orientation=squarish'); background-size: cover; background-position: center;"></div>
+                            <h3 class="text-xl font-bold text-primary text-center mb-1">Robert Fouda</h3>
+                            <p class="text-secondary text-center mb-3">Industry Advisor</p>
+                            <p class="text-gray-600 text-sm text-center mb-4">IT Director with extensive experience implementing AWS solutions in enterprise environments.</p>
+                            <div class="flex justify-center gap-3">
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-linkedin-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-twitter-x-fill"></i>
+                                    </div>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-secondary transition-colors">
+                                    <div class="w-8 h-8 flex items-center justify-center">
+                                        <i class="ri-global-line"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 z-10">
+                    <button id="team-next" class="bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-arrow-right-s-line text-primary"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Our Activities</h2>
+                <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-gray-600">Explore the various activities we organize to help our community learn and grow with AWS.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-lg p-8 text-center shadow-md hover:shadow-lg transition-shadow relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-primary/5 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 flex items-center justify-center bg-secondary/10 rounded-full mb-6 mx-auto">
+                            <i class="ri-presentation-line ri-2x text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Monthly Meetups</h3>
+                        <p class="text-gray-600">Regular gatherings featuring technical presentations, demos, and networking opportunities.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-8 text-center shadow-md hover:shadow-lg transition-shadow relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-primary/5 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 flex items-center justify-center bg-secondary/10 rounded-full mb-6 mx-auto">
+                            <i class="ri-tools-line ri-2x text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Hands-on Workshops</h3>
+                        <p class="text-gray-600">Practical sessions where you can build real-world solutions using AWS services.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-8 text-center shadow-md hover:shadow-lg transition-shadow relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-primary/5 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 flex items-center justify-center bg-secondary/10 rounded-full mb-6 mx-auto">
+                            <i class="ri-code-box-line ri-2x text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Hackathons</h3>
+                        <p class="text-gray-600">Competitive events where teams build innovative solutions using AWS technologies.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-8 text-center shadow-md hover:shadow-lg transition-shadow relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-primary/5 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <div class="relative z-10">
+                        <div class="w-20 h-20 flex items-center justify-center bg-secondary/10 rounded-full mb-6 mx-auto">
+                            <i class="ri-graduation-cap-line ri-2x text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-4">Study Groups</h3>
+                        <p class="text-gray-600">Collaborative learning sessions focused on AWS certification preparation and skill development.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="h-64 bg-gray-200" style="background-image: url('https://readdy.ai/api/search-image?query=A%20collage%20of%20AWS%20community%20activities%20showing%20workshops%2C%20networking%20events%2C%20and%20presentations%2C%20diverse%20group%20of%20participants%20engaged%20in%20cloud%20computing%20learning%2C%20professional%20tech%20environment&width=800&height=400&seq=135&orientation=landscape'); background-size: cover; background-position: center;"></div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Community Impact</h3>
+                            <p class="text-gray-600 mb-4">Since our founding in 2023, the AWS User Group Yaoundé has:</p>
+                            <ul class="space-y-2 text-gray-600 mb-6">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1 text-secondary">
+                                        <i class="ri-check-line"></i>
+                                    </div>
+                                    <span>Organized over 25 technical events</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1 text-secondary">
+                                        <i class="ri-check-line"></i>
+                                    </div>
+                                    <span>Built a community of 500+ cloud enthusiasts</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1 text-secondary">
+                                        <i class="ri-check-line"></i>
+                                    </div>
+                                    <span>Helped 75+ members achieve AWS certifications</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1 text-secondary">
+                                        <i class="ri-check-line"></i>
+                                    </div>
+                                    <span>Partnered with 12 local tech companies</span>
+                                </li>
+                            </ul>
+                            <button class="bg-secondary hover:bg-secondary/90 text-primary font-bold py-2 px-6 !rounded-button whitespace-nowrap transition-all">
+                                Join Our Community
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-primary mb-4">Upcoming Activities</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-100 pb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2 text-secondary">
+                                    <i class="ri-calendar-event-line"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">AWS re:Invent Recap</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-1">May 30, 2025 • 6:00 PM</p>
+                            <p class="text-sm text-gray-600">Tech Hub Yaoundé</p>
+                        </div>
+                        
+                        <div class="border-b border-gray-100 pb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2 text-secondary">
+                                    <i class="ri-calendar-event-line"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">Cloud Security Workshop</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-1">June 15, 2025 • 5:30 PM</p>
+                            <p class="text-sm text-gray-600">Digital Innovation Center</p>
+                        </div>
+                        
+                        <div class="border-b border-gray-100 pb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2 text-secondary">
+                                    <i class="ri-calendar-event-line"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">AWS Community Hackathon</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-1">July 8-9, 2025 • 9:00 AM</p>
+                            <p class="text-sm text-gray-600">Yaoundé Innovation Hub</p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <div class="w-5 h-5 flex items-center justify-center mr-2 text-secondary">
+                                    <i class="ri-calendar-event-line"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">AWS Certification Study Group</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-1">Weekly • Thursdays • 7:00 PM</p>
+                            <p class="text-sm text-gray-600">Online via Zoom</p>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 !rounded-button whitespace-nowrap transition-all">
+                        View All Activities
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+                <p class="max-w-3xl mx-auto text-gray-600">Have questions or want to get involved? We'd love to hear from you!</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-secondary" placeholder="Enter your name">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-secondary" placeholder="Enter your email">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-secondary" placeholder="What is this about?">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-secondary" placeholder="Your message here..."></textarea>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <input type="checkbox" id="subscribe" class="mr-3 mt-1">
+                            <label for="subscribe" class="text-gray-600">Subscribe to our newsletter to receive updates about upcoming events and activities</label>
+                        </div>
+                        
+                        <button type="submit" class="bg-secondary hover:bg-secondary/90 text-primary font-bold py-3 px-8 !rounded-button whitespace-nowrap transition-all">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="lg:pl-8">
+                    <div class="bg-gray-50 rounded-lg p-8 h-full">
+                        <h3 class="text-2xl font-bold text-primary mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6 mb-8">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-secondary/10 rounded-full mr-4 mt-1">
+                                    <i class="ri-mail-line text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">Email</h4>
+                                    <p class="text-gray-600">info@awsusergroupyaounde.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-secondary/10 rounded-full mr-4 mt-1">
+                                    <i class="ri-map-pin-line text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">Meet Us</h4>
+                                    <p class="text-gray-600">Tech Hub Yaoundé, Bastos District<br>Yaoundé, Cameroon</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-secondary/10 rounded-full mr-4 mt-1">
+                                    <i class="ri-community-line text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">Community</h4>
+                                    <p class="text-gray-600">Join our Slack workspace for discussions and updates</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold text-gray-800 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white hover:bg-secondary hover:text-primary transition-colors">
+                                <i class="ri-twitter-x-fill"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white hover:bg-secondary hover:text-primary transition-colors">
+                                <i class="ri-linkedin-fill"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white hover:bg-secondary hover:text-primary transition-colors">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white hover:bg-secondary hover:text-primary transition-colors">
+                                <i class="ri-instagram-fill"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white hover:bg-secondary hover:text-primary transition-colors">
+                                <i class="ri-github-fill"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="mt-8 pt-8 border-t border-gray-200">
+                            <h4 class="font-semibold text-gray-800 mb-4">Newsletter</h4>
+                            <p class="text-gray-600 mb-4">Stay updated with our monthly newsletter.</p>
+                            <div class="flex">
+                                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 border border-gray-300 rounded-l focus:border-secondary">
+                                <button class="bg-secondary hover:bg-secondary/90 text-primary font-bold py-2 px-4 rounded-r !rounded-button whitespace-nowrap transition-all">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="#" class="text-white text-2xl font-bold flex items-center mb-4">
+                        <div class="w-10 h-10 flex items-center justify-center mr-2">
+                            <i class="ri-cloud-line ri-2x"></i>
+                        </div>
+                        <span>AWS User Group<br>Yaoundé</span>
+                    </a>
+                    <p class="text-gray-300 text-sm">A community-led group for Amazon Web Services users in Yaoundé, Cameroon.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-secondary transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-secondary transition-colors">About Us</a></li>
+                        <li><a href="#events" class="text-gray-300 hover:text-secondary transition-colors">Events</a></li>
+                        <li><a href="#team" class="text-gray-300 hover:text-secondary transition-colors">Our Team</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-secondary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">AWS Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">AWS Training</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">AWS Certifications</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">Community Blog</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-secondary transition-colors">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 AWS User Group Yaoundé. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-twitter-x-fill"></i>
+                        </div>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-linkedin-fill"></i>
+                        </div>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-facebook-fill"></i>
+                        </div>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-instagram-fill"></i>
+                        </div>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-github-fill"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-primary', 'shadow-md');
+                    navbar.classList.remove('bg-transparent');
+                } else {
+                    navbar.classList.remove('bg-primary', 'shadow-md');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
+            
+            // Mobile menu toggle
+            const menuButton = document.querySelector('.md\\:hidden');
+            const closeButton = document.getElementById('close-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+            });
+            
+            closeButton.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
+            
+            // Mobile menu links
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Active navigation link highlighting
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Event toggle
+            const upcomingTab = document.getElementById('upcoming');
+            const pastTab = document.getElementById('past');
+            const upcomingEvents = document.getElementById('upcoming-events');
+            const pastEvents = document.getElementById('past-events');
+            
+            upcomingTab.addEventListener('change', function() {
+                if (this.checked) {
+                    upcomingEvents.classList.remove('hidden');
+                    pastEvents.classList.add('hidden');
+                }
+            });
+            
+            pastTab.addEventListener('change', function() {
+                if (this.checked) {
+                    pastEvents.classList.remove('hidden');
+                    upcomingEvents.classList.add('hidden');
+                }
+            });
+            
+            // Team carousel
+            const teamScroll = document.querySelector('.team-scroll');
+            const prevButton = document.getElementById('team-prev');
+            const nextButton = document.getElementById('team-next');
+            
+            prevButton.addEventListener('click', function() {
+                teamScroll.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            nextButton.addEventListener('click', function() {
+                teamScroll.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            // Countdown timer
+            function updateCountdown() {
+                const targetDate = new Date('May 30, 2025 18:00:00').getTime();
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').innerText = days;
+                document.getElementById('hours').innerText = hours;
+                document.getElementById('minutes').innerText = minutes;
+                document.getElementById('seconds').innerText = seconds;
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
