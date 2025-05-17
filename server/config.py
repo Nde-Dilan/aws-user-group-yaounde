@@ -8,7 +8,7 @@ load_dotenv()
 class Config:
     """Base configuration"""
     # Use environment variables for sensitive data
-    SECRET_KEY = os.getenv('SECRET_KEY', 'generate-a-secure-key-for-production')
+    SECRET_KEY = os.getenv('SECRET_KEY', '8GjSKhB30Vv7IkEHsk0nzG2Ul4/loVWNOwAGsqpBdG0QtqBEy6XE+K8G/xvQ5a8hfxhrhjP2RDNBWrNJ9b02gls1tkBz1X2Vdn8R5rD5yC1zKfqPdGmVrhumRy0pzuM0INtQeoPBodbxtkFNiNFmUC5VwCWLLU5m6MXsPPOSmJw=')
     
     # Base directory of the server
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -31,7 +31,7 @@ class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
     # Update with your actual domain
-    CORS_ORIGINS = ["https://your-frontend-domain.com"] 
+    CORS_ORIGINS = ["https://aws-user-group-yaounde.vercel.app"] 
     
     # Security settings
     SESSION_COOKIE_SECURE = True
