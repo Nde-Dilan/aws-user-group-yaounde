@@ -1,10 +1,33 @@
-import React from 'react';
-import { useWebsiteData } from '../../data/DataProvider';
+import React, { useEffect, useState } from 'react';
 import Countdown from './Countdown';
+import useWebsiteData from '../../data/useWebsiteData';
+import { dataLoaded } from '../../data';
 
 const Hero = () => {
-  const { data, resolveImageUrl } = useWebsiteData();
-  const heroData = data.hero;
+  const { resolveImageUrl } = useWebsiteData();
+   const [loadedData, setLoadedData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    
+  
+    useEffect(() => {
+      // Wait for the promise to resolve
+      dataLoaded
+        .then(data => {
+          setLoadedData(data); // Now we have the actual data
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error("Error loading data:", error);
+          setIsLoading(false);
+        });
+    }, []);
+  
+    if (isLoading) {
+      return <div>Loading data...</div>;
+    }
+  const heroData = loadedData.hero;
+  
+  console.log(heroData);
   
   return (
     <section 

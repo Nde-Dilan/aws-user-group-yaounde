@@ -1,67 +1,59 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DATA as originalData } from './index';
+import WebsiteContext from './websiteContext';
 
-// Create Context
-const DataContext = createContext();
+const API_URL = 'http://localhost:5000/api';
 
-export const useWebsiteData = () => useContext(DataContext);
-
-export function DataProvider({ children }) {
+export default function DataProvider({ children }) {
   const [data, setData] = useState(originalData);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   useEffect(() => {
-    // Function to load data from localStorage
-    const loadData = () => {
-      const savedData = localStorage.getItem('awsUserGroupData');
-      if (savedData) {
-        try {
-          const parsedData = JSON.parse(savedData);
-          setData(parsedData);
-        } catch (e) {
-          console.error('Error loading saved data:', e);
+    // Function to load data from API
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_URL}/data/`);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
         }
+        
+        const apiData = await response.json();
+        setData(apiData);
+        console.log("Data loaded successfully:", apiData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load website data. Using local fallback data.');
+        // Fallback to original data if API fails
+        setData(originalData);
+      } finally {
+        setLoading(false);
       }
     };
     
-    // Load data on mount
-    loadData();
-    
-    // Listen for storage events (from other tabs) or custom events
-    window.addEventListener('storage', loadData);
-    window.addEventListener('data-updated', loadData);
-    
-    return () => {
-      window.removeEventListener('storage', loadData);
-      window.removeEventListener('data-updated', loadData);
-    };
+    fetchData();
   }, []);
   
-  // Function to resolve image URLs (handle local: prefix)
+  // Function to resolve image URLs
   const resolveImageUrl = (url) => {
     if (!url) return '';
     
-    if (typeof url === 'string' && url.startsWith('local:')) {
-      const fileName = url.replace('local:', '');
-      const storedImage = localStorage.getItem(`image_${fileName}`);
-      
-      if (storedImage) {
-        try {
-          const imageData = JSON.parse(storedImage);
-          return imageData.dataUrl;
-        } catch (e) {
-          console.error('Failed to parse stored image data:', e);
-          return '';
-        }
-      }
-      return '';
-    }
+    // Handle API-served images
+    // Handle API-served images - FIX THE URL
+  if (url.startsWith('/static/')) {
+    // Use the direct static path instead of going through API
+    return `http://localhost:5000${url}`;  // NOT ${API_URL}${url}
+  }
     
     return url;
   };
   
   return (
-    <DataContext.Provider value={{ data, resolveImageUrl }}>
+    <WebsiteContext.Provider value={{ data, loading, error, resolveImageUrl }}>
       {children}
-    </DataContext.Provider>
+    </WebsiteContext.Provider>
   );
 }

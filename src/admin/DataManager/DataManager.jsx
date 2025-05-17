@@ -14,6 +14,7 @@ import Icon from "../../components/shared/Icon";
 
 import { downloadAsIndexJs } from "../../utils/exportHelper";
 import ImportData from "../../ImportData";
+import { useAuth } from "../../components/Auth/useAuth";
 
 function DataManager() {
   // Load data from localStorage if available, otherwise use the original data
@@ -42,20 +43,40 @@ function DataManager() {
     setHasChanges(true);
   };
 
-  const handleSave = () => {
-    // Save to localStorage
-    localStorage.setItem("awsUserGroupData", JSON.stringify(data));
+  const handleSave = async () => {
+    try {
+      // Save to API
+      const response = await fetch("http://localhost:5000/api/data/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    // Update last saved timestamp
-    const now = new Date();
-    setLastSaved(now.toLocaleTimeString());
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
 
-    setHasChanges(false);
+      const result = await response.json();
 
-    // Force the website to refresh data from localStorage
-    window.dispatchEvent(new Event("storage"));
+      if (result && !result.success && result.message) {
+        throw new Error(result.message);
+      }
 
-    alert("Data saved successfully! The website should reflect your changes.");
+      // Update last saved timestamp
+      const now = new Date();
+      setLastSaved(now.toLocaleTimeString());
+      setHasChanges(false);
+
+      // Also save to localStorage as backup
+      localStorage.setItem("awsUserGroupData", JSON.stringify(data));
+
+      alert("Data saved successfully! Your changes are now permanent.");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert(`Error saving data: ${error.message}`);
+    }
   };
 
   const handleReset = () => {
@@ -190,6 +211,9 @@ function DataManager() {
     (section) => section.id === activeSection
   )?.component;
 
+
+   const { logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-primary text-white py-4 px-6 shadow-md">
@@ -204,11 +228,23 @@ function DataManager() {
               </span>
             )}
             <button
+              onClick={handleSave}
+              disabled={!hasChanges}
+              className={`px-4 py-2 rounded-button ${
+                hasChanges
+                  ? "bg-secondary text-primary hover:bg-secondary/90"
+                  : "bg-gray-500 text-white cursor-not-allowed"
+              } font-bold transition-colors`}
+            >
+              Save Changes
+            </button>
+            <button
               onClick={handleReset}
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-button font-bold transition-colors"
             >
               Reset Data
             </button>
+
             <ImportData
               onImport={(importedData) => {
                 if (
@@ -227,22 +263,18 @@ function DataManager() {
             >
               Export JSON
             </button>
-            <button
+            {/* <button
               onClick={() => downloadAsIndexJs(data)}
               className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-button font-bold transition-colors"
             >
               Export as index.js
-            </button>
+            </button> */}
+
             <button
-              onClick={handleSave}
-              disabled={!hasChanges}
-              className={`px-4 py-2 rounded-button ${
-                hasChanges
-                  ? "bg-secondary text-primary hover:bg-secondary/90"
-                  : "bg-gray-500 text-white cursor-not-allowed"
-              } font-bold transition-colors`}
+              onClick={logout}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-button font-bold transition-colors"
             >
-              Save Changes
+              Logout
             </button>
           </div>
         </div>

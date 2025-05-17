@@ -1,13 +1,16 @@
 import React from 'react';
 import Icon from '../shared/Icon';
+import useWebsiteData from '../../data/useWebsiteData';
 
 const TeamMember = ({ member }) => {
+    const { resolveImageUrl } = useWebsiteData();
+  
   return (
     <div className="bg-white rounded-lg shadow-md p-6 w-64">
       <div 
         className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4" 
         style={{
-          backgroundImage: `url('${member.image}')`,
+          backgroundImage: `url('${resolveImageUrl(member.image)}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
