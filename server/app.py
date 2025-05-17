@@ -1,70 +1,80 @@
 import os
 import json
-from flask import Flask, jsonify, request,send_from_directory
+import logging
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from werkzeug.middleware.proxy_fix import ProxyFix
 from routes.data_routes import data_bp
 from routes.image_routes import image_bp
 from routes.auth_routes import auth_bp
-from config import Config
+from config import AppConfig
+from security import SecurityHeaders
 
-app = Flask(__name__,static_url_path='/static', static_folder='static')
 
-# Configure CORS more explicitly
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173","methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-        "allow_headers": ["Content-Type", "Authorization"],
-        "supports_credentials": True}})
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# Create Flask app
+app = Flask(__name__, static_url_path='/static', static_folder='static')
+app.config.from_object(AppConfig)
+# Initialize security headers
+SecurityHeaders(app)
+
+# Fix for proper IP when behind proxy
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
+# Rate limiting
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
+)
+
+# Configure CORS
+CORS(app, origins=AppConfig.CORS_ORIGINS, 
+     supports_credentials=True)
+
+# Apply rate limiting to auth endpoints
+limiter.limit("5 per minute")(auth_bp)
 
 # Register blueprints
 app.register_blueprint(data_bp, url_prefix='/api/data')
 app.register_blueprint(image_bp, url_prefix='/api/images')
-
-
-# Register the blueprint
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
- 
 # Create uploads directory if it doesn't exist
 uploads_dir = os.path.join(app.static_folder, 'uploads')
 os.makedirs(uploads_dir, exist_ok=True)
 
-# Add a direct route to serve static files
-@app.route('/static/<path:filename>')
-def serve_static(filename):
-    return send_from_directory(app.static_folder, filename)
+# Error handlers
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not found"}), 404
 
- 
- 
+@app.errorhandler(500)
+def server_error(error):
+    logger.error(f"Server error: {error}")
+    return jsonify({"error": "Internal server error"}), 500
+
 @app.route('/api/health')
 def health_check():
     return jsonify({"status": "ok", "message": "API is running"})
 
-# Add a test route for debugging
-@app.route('/api/test-cors', methods=['GET', 'POST', 'OPTIONS'])
-def test_cors():
-    if request.method == 'OPTIONS':
-        # Preflight request - return empty response with CORS headers
-        response = app.make_default_options_response()
-    else:
-        response = jsonify({
-            "message": "CORS test successful",
-            "method": request.method,
-            "headers": dict(request.headers)
-        })
-    
-    # Add CORS headers manually for this route
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
-    
-    return response
-
+# Only for local development
 if __name__ == '__main__':
-    
-    
-    # Print server info
-    print(f"Starting Flask server at http://localhost:5000")
-    print(f"CORS should be enabled for all /api/* routes")
-    print(f"Test CORS at http://localhost:5000/api/test-cors")
-    
-    # Start the server with host='0.0.0.0' to make it accessible from other devices
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    if AppConfig == DevelopmentConfig:
+        app.run(debug=True, port=5000)
+    else:
+        # Don't run with debug in production
+        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
