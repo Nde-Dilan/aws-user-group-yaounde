@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../components/shared/Icon";
+import { BASE_URL } from "../../data";
 
 function Login() {
   const [code, setCode] = useState("");
@@ -21,7 +22,8 @@ function Login() {
 
     try {
       const response = await fetch(
-        "https://aws-user-group-yaounde.onrender.com/api/auth/login",
+        `${BASE_URL}/api/auth/login`,
+
         {
           method: "POST",
           headers: {

@@ -8,11 +8,10 @@ import TeamSection from "../sections/TeamSection";
 import ActivitiesSection from "../sections/ActivitiesSection";
 import ContactSection from "../sections/ContactSection";
 import FooterSection from "../sections/FooterSection";
-import { DATA as originalData } from "../../data";
+import { BASE_URL, DATA as originalData } from "../../data";
 import SectionNav from "../components/SectionNav";
 import Icon from "../../components/shared/Icon";
 
-import { downloadAsIndexJs } from "../../utils/exportHelper";
 import ImportData from "../../ImportData";
 import { useAuth } from "../../components/Auth/useAuth";
 
@@ -47,7 +46,8 @@ function DataManager() {
     try {
       // Save to API
       const response = await fetch(
-        "https://aws-user-group-yaounde.onrender.com/api/data/",
+                `${BASE_URL}/api/data`,
+        
         {
           method: "POST",
           headers: {

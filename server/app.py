@@ -73,7 +73,8 @@ def health_check():
 
 # Only for local development
 if __name__ == '__main__':
-    if AppConfig == DevelopmentConfig:
+    # if AppConfig == DevelopmentConfig:
+    if True:
         app.run(debug=True, port=5000)
     else:
         # Don't run with debug in production

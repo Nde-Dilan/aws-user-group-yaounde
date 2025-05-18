@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { DATA as originalData } from "./index";
+import { BASE_URL, DATA as originalData } from "./index";
 import WebsiteContext from "./websiteContext";
 
-const API_URL = "https://aws-user-group-yaounde.onrender.com/api";
+const API_URL = `${BASE_URL}/api/`;
 
 export default function DataProvider({ children }) {
   const [data, setData] = useState(originalData);

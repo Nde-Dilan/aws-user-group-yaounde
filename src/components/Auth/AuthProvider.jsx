@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
+import { BASE_URL } from "../../data";
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("adminToken"));
@@ -16,7 +17,8 @@ export function AuthProvider({ children }) {
 
       try {
         const response = await fetch(
-          "https://aws-user-group-yaounde.onrender.com/api/auth/verify",
+          `${BASE_URL}/api/auth/verify`,
+
           {
             method: "POST",
             headers: {
@@ -57,7 +59,8 @@ export function AuthProvider({ children }) {
     if (token) {
       try {
         await fetch(
-          "https://aws-user-group-yaounde.onrender.com/api/auth/logout",
+          `${BASE_URL}/api/auth/logout`,
+
           {
             method: "POST",
             headers: {

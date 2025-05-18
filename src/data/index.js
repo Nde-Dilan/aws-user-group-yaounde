@@ -1,9 +1,12 @@
 // Initial empty data structure
 let websiteData = {};
 
+// export const BASE_URL = "https://aws-user-group-yaounde.onrender.com/"
+export const BASE_URL = "http://127.0.0.1:5000"
+
 // Create a promise that will resolve when data is loaded
 const dataLoadingPromise = fetch(
-  "https://aws-user-group-yaounde.onrender.com/api/data"
+  `${BASE_URL}/api/data`
 )
   .then((response) => {
     if (!response.ok) {

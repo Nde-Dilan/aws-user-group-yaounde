@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import FormField from "./FormField";
 import Icon from "../../components/shared/Icon";
+import { BASE_URL } from "../../data";
 
 function ImageUploader({
   label,
@@ -57,7 +58,7 @@ function ImageUploader({
 
       // Upload to API
       const response = await fetch(
-        "https://aws-user-group-yaounde.onrender.com/api/images/upload",
+        `${BASE_URL}/api/images/upload`,
         {
           method: "POST",
           body: formData,
