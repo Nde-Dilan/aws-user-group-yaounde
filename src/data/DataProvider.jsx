@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BASE_URL, DATA as originalData } from "./index";
 import WebsiteContext from "./websiteContext";
 
-const API_URL = `${BASE_URL}/api/`;
+const API_URL = `${BASE_URL}/api`;
 
 export default function DataProvider({ children }) {
   const [data, setData] = useState(originalData);
