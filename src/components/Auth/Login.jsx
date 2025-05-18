@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../components/shared/Icon";
 import { BASE_URL } from "../../data";
+import { useAuth } from "./useAuth";
 
 function Login() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/paulaadmin");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
 
     if (code.length !== 4) {
       setError("Please enter a 4-digit code");
@@ -39,11 +48,7 @@ function Login() {
         throw new Error(data.message || "Authentication failed");
       }
 
-      // Store token in localStorage
-      localStorage.setItem("adminToken", data.token);
-
-      // Redirect to admin page
-      navigate("/paulaadmin");
+      login(data.token); // <-- use context method
     } catch (error) {
       setError(error.message);
     } finally {

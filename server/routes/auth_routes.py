@@ -42,8 +42,12 @@ def login():
         "token": token
     })
 
-@auth_bp.route('/verify', methods=['POST'])
+
+@auth_bp.route('/verify', methods=['POST', 'OPTIONS'])
 def verify_token():
+    if request.method == 'OPTIONS':
+        # CORS preflight
+        return '', 200
     data = request.json
     token = data.get('token')
     
@@ -57,7 +61,7 @@ def verify_token():
         active_tokens.pop(token)
         return jsonify({"valid": False, "message": "Token expired"}), 401
     
-    return jsonify({"valid": True})
+    return jsonify({"valid": True}),200
 
 @auth_bp.route('/logout', methods=['POST'])
 def logout():

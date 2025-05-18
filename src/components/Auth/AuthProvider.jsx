@@ -9,44 +9,31 @@ export function AuthProvider({ children }) {
 
   // Verify token on mount
   useEffect(() => {
+    let cancelled = false;
     const verifyToken = async () => {
       if (!token) {
         setIsLoading(false);
         return;
       }
-
       try {
-        const response = await fetch(
-          `${BASE_URL}/api/auth/verify`,
-
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token }),
-          }
-        );
-
+        const response = await fetch(`${BASE_URL}/api/auth/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
+        if (!response.ok) throw new Error("Invalid token");
         const data = await response.json();
-
-        if (!response.ok || !data.valid) {
-          // Invalid or expired token
-          localStorage.removeItem("adminToken");
-          setToken(null);
-          setIsAuthenticated(false);
-        } else {
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        console.error("Token verification failed:", error);
-        setIsAuthenticated(false);
+        if (!cancelled) setIsAuthenticated(data.valid);
+      } catch {
+        if (!cancelled) setIsAuthenticated(false);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
-
     verifyToken();
+    return () => {
+      cancelled = true;
+    };
   }, [token]);
 
   const login = (newToken) => {

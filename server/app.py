@@ -9,7 +9,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from routes.data_routes import data_bp
 from routes.image_routes import image_bp
 from routes.auth_routes import auth_bp
-from config import AppConfig
+from config import AppConfig, DevelopmentConfig
 from security import SecurityHeaders
 
 
@@ -37,7 +37,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["200 per day", "50 per hour"],
+    default_limits=["20000 per day", "1000 per hour"],
     storage_uri="memory://",
 )
 
@@ -46,7 +46,7 @@ CORS(app, origins=AppConfig.CORS_ORIGINS,
      supports_credentials=True)
 
 # Apply rate limiting to auth endpoints
-limiter.limit("5 per minute")(auth_bp)
+limiter.limit("35 per minute")(auth_bp)
 
 # Register blueprints
 app.register_blueprint(data_bp, url_prefix='/api/data')
@@ -56,6 +56,8 @@ app.register_blueprint(auth_bp, url_prefix='/api/auth')
 # Create uploads directory if it doesn't exist
 uploads_dir = os.path.join(app.static_folder, 'uploads')
 os.makedirs(uploads_dir, exist_ok=True)
+
+
 
 # Error handlers
 @app.errorhandler(404)
@@ -73,8 +75,8 @@ def health_check():
 
 # Only for local development
 if __name__ == '__main__':
-    # if AppConfig == DevelopmentConfig:
-    if True:
+    if AppConfig == DevelopmentConfig:
+    # if True:
         app.run(debug=True, port=5000)
     else:
         # Don't run with debug in production
