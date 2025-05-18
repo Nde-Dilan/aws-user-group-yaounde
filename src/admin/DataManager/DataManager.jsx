@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GeneralSection from "../sections/GeneralSection";
 import NavigationSection from "../sections/NavigationSection";
 import HeroSection from "../sections/HeroSection";
@@ -8,7 +8,7 @@ import TeamSection from "../sections/TeamSection";
 import ActivitiesSection from "../sections/ActivitiesSection";
 import ContactSection from "../sections/ContactSection";
 import FooterSection from "../sections/FooterSection";
-import { BASE_URL, DATA as originalData } from "../../data";
+import { BASE_URL, dataLoaded } from "../../data";
 import SectionNav from "../components/SectionNav";
 import Icon from "../../components/shared/Icon";
 
@@ -16,23 +16,30 @@ import ImportData from "../../ImportData";
 import { useAuth } from "../../components/Auth/useAuth";
 
 function DataManager() {
-  // Load data from localStorage if available, otherwise use the original data
-  const [data, setData] = useState(() => {
-    const savedData = localStorage.getItem("awsUserGroupData");
-    if (savedData) {
-      try {
-        return JSON.parse(savedData);
-      } catch (e) {
-        console.error("Error parsing saved data:", e);
-        return originalData;
-      }
-    }
-    return originalData;
-  });
-
+  const { logout } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(null);
   const [activeSection, setActiveSection] = useState("general");
   const [hasChanges, setHasChanges] = useState(false);
   const [lastSaved, setLastSaved] = useState(null);
+
+  useEffect(() => {
+    // Wait for the promise to resolve
+    dataLoaded
+      .then((data) => {
+        setData(data); // Now we have the actual data
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading data...</div>;
+  }
+
 
   const handleDataChange = (sectionKey, newSectionData) => {
     setData((prevData) => ({
@@ -46,8 +53,8 @@ function DataManager() {
     try {
       // Save to API
       const response = await fetch(
-                `${BASE_URL}/api/data`,
-        
+        `${BASE_URL}/api/data`,
+
         {
           method: "POST",
           headers: {
@@ -89,7 +96,7 @@ function DataManager() {
       )
     ) {
       localStorage.removeItem("awsUserGroupData");
-      setData(originalData);
+      setData(data);
       setHasChanges(false);
       setLastSaved(null);
 
@@ -213,8 +220,6 @@ function DataManager() {
   const activeComponent = sections.find(
     (section) => section.id === activeSection
   )?.component;
-
-  const { logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50">

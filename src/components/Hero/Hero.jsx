@@ -5,8 +5,8 @@ import { dataLoaded } from '../../data';
 
 const Hero = () => {
   const { resolveImageUrl } = useWebsiteData();
-   const [loadedData, setLoadedData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedData, setLoadedData] = useState(null);
     
   
     useEffect(() => {
